@@ -20,59 +20,75 @@ class App(ctk.CTk):
         x = (screen_width / 2) - (Window_Width / 2)
         y = (screen_height / 2) - (Window_Height / 2)
         self.geometry('%dx%d+%d+%d' % (Window_Width, Window_Height, x, y))
+        self.minsize(900, 540)
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(1, weight=20)
+        self.columnconfigure(0, weight=6)
+        self.columnconfigure(1, weight=29)
 
 
 
         self.Main_header = MainHeader(self)
-        self.Main_header.pack(side=TOP, fill=X)
+        # self.Main_header.pack(side=TOP, fill=X)
+        self.Main_header.grid(row=0, columnspan=2, sticky=NSEW)
+
+        self.Left_frame = ctk.CTkFrame(self, width=1000)
+        self.labbel = ctk.CTkLabel(self.Left_frame, text="TEST\nOptions\nMenu", font=("", 30), text_color="green").pack()
+        self.Left_frame.grid(row=1, column=1, sticky=NSEW)
+
 
 
         # Создаем два фрейма между которыми будем переключаться
         self.Main_frame = MainFrame(self)
         self.Game_Frame = InGameFrame(self)
-        self.INET = ctk.CTkLabel(self, text="ИНЕТ ЕСТЬ", text_color="green", font=("", 22))
-        self.INET.pack(side=BOTTOM)
-        self.check_connection()
-        # Упаковываем первый фрейм
-        self.Main_frame.pack()
+        # self.INET = ctk.CTkLabel(self, text="ИНЕТ ЕСТЬ", text_color="green", font=("", 22))
+        # self.INET.pack(side=BOTTOM)
+        # self.check_connection()
 
-    def check_connection(self):
-        try:
-            requests.head("http://www.google.com/", timeout=0.5)
-            self.INET.configure(text="ИНЕТ ЕСТЬ", text_color="green")
-            print("kaif")
-        except requests.ConnectionError:
-            self.INET.configure(text="ИНЕТА НЕМА", text_color="red")
-            print("The internet connection is down")
-        threading.Timer(3, self.check_connection).start()
+        self.Main_frame.grid(row=1, column=0, sticky=NSEW)
+
+    # def check_connection(self):
+    #     try:
+    #         requests.head("http://www.google.com/", timeout=0.5)
+    #         self.INET.configure(text="ИНЕТ ЕСТЬ", text_color="green")
+    #         print("kaif")
+    #     except requests.ConnectionError:
+    #         self.INET.configure(text="ИНЕТА НЕМА", text_color="red")
+    #         print("The internet connection is down")
+    #     threading.Timer(3, self.check_connection).start()
 
     def __del__(self):
-        threading.Lock()
+        pass
 
 
 class MainHeader(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
-        self.configure(fg_color="#FFA302", width=Window_Width)
+        self.configure(fg_color="#FFA302")
 
+        self.columnconfigure(0, weight=1)
         self.Logo = ctk.CTkLabel(self, text="QUIZZY", font=("", 33))
-        self.Logo.pack(side=LEFT)
+        self.Logo.grid(column=0, sticky=SW)
 
 
 class MainFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         self.App_obj = master
+        self.configure(fg_color="lightgray")
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(1, weight=1)
+
         self.lab1 = ctk.CTkLabel(self, text="WINDOW1", bg_color="#FFA302", font=("", 50))
-        self.lab1.pack()
+        self.lab1.grid(row=0)
         self.btn1 = ctk.CTkButton(self, text="change_window", command=self.win12)
-        self.btn1.pack()
+        self.btn1.grid(row=1)
 
     def win12(self):
         print("frame1")
-        self.App_obj.Main_frame.pack_forget()  # скрываем текущий фрейм
+        self.App_obj.Main_frame.grid_forget()
         print(tracemalloc.get_traced_memory())
-        self.App_obj.Game_Frame.pack()  # отображаем второй фрейм
+        self.App_obj.Game_Frame.grid(row=1, column=0, sticky=NSEW)
 
     def __del__(self):
         print("frame1 destructed")
@@ -82,16 +98,18 @@ class InGameFrame(ctk.CTkFrame):
     def __init__(self, master: ctk.CTk, **kwargs):
         super().__init__(master, **kwargs)
         self.App_obj = master
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(1, weight=1)
         lab2 = ctk.CTkLabel(self, text="WINDOW2", bg_color="#00E8FC", font=("", 50))
-        lab2.pack()
+        lab2.grid(row=0)
         btn2 = ctk.CTkButton(self, text="change_window", command=self.win21)
-        btn2.pack()
+        btn2.grid(row=1)
 
     def win21(self):
         print("frame2")
-        self.App_obj.Game_Frame.pack_forget()  # скрываем текущий фрейм
+        self.App_obj.Game_Frame.grid_forget()
         print(tracemalloc.get_traced_memory())
-        self.App_obj.Main_frame.pack()  # отображаем первый фрейм
+        self.App_obj.Main_frame.grid(row=1, column=0, sticky=NSEW)
 
     def __del__(self):
         print("frame2 destructed")
