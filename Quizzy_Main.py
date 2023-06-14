@@ -8,7 +8,7 @@ import tracemalloc
 Window_Width = 1500
 Window_Height = 900
 
-
+ctk.set_default_color_theme("static/green.json")
 
 class App(ctk.CTk):
     def __init__(self):
@@ -29,8 +29,10 @@ class App(ctk.CTk):
         self.Main_header = MainHeader(self)
         # self.Main_header.pack(side=TOP, fill=X)
         self.Main_header.grid(row=0, columnspan=2, sticky=NSEW)
+
         self.Left_frame = ctk.CTkFrame(self, fg_color="#292929")
         self.labbel = ctk.CTkLabel(self.Left_frame, text="TEST\nOptions\nMenu", font=("", 30), text_color="green").pack()
+        self.Left_frame.configure(corner_radius=0)
         self.Left_frame.grid(row=1, column=0, sticky=NSEW)
 
 
@@ -43,7 +45,7 @@ class App(ctk.CTk):
         # self.INET.pack(side=BOTTOM)
         # self.check_connection()
 
-        self.Main_frame.grid(row=1, column=1)
+        self.Main_frame.grid(row=1, column=1, sticky=NSEW)
 
     # def check_connection(self):
     #     try:
@@ -66,7 +68,7 @@ class MainHeader(ctk.CTkFrame):
         # self.Logo = ctk.CTkLabel(self, text="QUIZZY", font=("", 33))
         # self.Logo.pack(side=LEFT)
         self.LOGO_PICK = ctk.CTkImage(Image.open("QUIZZY.png"), size=(200, 50))
-        self.Logo = ctk.CTkLabel(self, image=self.LOGO_PICK, text="")
+        self.Logo = ctk.CTkLabel(self, image=self.LOGO_PICK, text="", fg_color="red")
         self.Logo.pack(side=LEFT)
 
 
@@ -88,7 +90,7 @@ class MainFrame(ctk.CTkFrame):
         print("frame1")
         self.App_obj.Main_frame.grid_forget()
         print(tracemalloc.get_traced_memory())
-        self.App_obj.Game_Frame.grid(row=1, column=1)
+        self.App_obj.Game_Frame.grid(row=1, column=1, sticky=NSEW)
 
 
 
