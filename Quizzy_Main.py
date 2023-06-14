@@ -10,31 +10,29 @@ Window_Height = 900
 
 
 
-
 class App(ctk.CTk):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self):
+        super().__init__()
         self.title("QUIZZY")
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         x = (screen_width / 2) - (Window_Width / 2)
         y = (screen_height / 2) - (Window_Height / 2)
-        self.geometry('%dx%d+%d+%d' % (Window_Width, Window_Height, x, y))
-        self.minsize(900, 540)
+        self.geometry('%dx%d+%d+%d' % (int(Window_Width*0.6), int(Window_Height*0.6), x, y))
+        self.minsize(int(Window_Width*0.6), int(Window_Height*0.6))
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=20)
         self.columnconfigure(0, weight=6)
         self.columnconfigure(1, weight=29)
 
 
-
         self.Main_header = MainHeader(self)
         # self.Main_header.pack(side=TOP, fill=X)
         self.Main_header.grid(row=0, columnspan=2, sticky=NSEW)
-
-        self.Left_frame = ctk.CTkFrame(self, width=1000)
+        self.Left_frame = ctk.CTkFrame(self, fg_color="#292929")
         self.labbel = ctk.CTkLabel(self.Left_frame, text="TEST\nOptions\nMenu", font=("", 30), text_color="green").pack()
-        self.Left_frame.grid(row=1, column=1, sticky=NSEW)
+        self.Left_frame.grid(row=1, column=0, sticky=NSEW)
+
 
 
 
@@ -45,7 +43,7 @@ class App(ctk.CTk):
         # self.INET.pack(side=BOTTOM)
         # self.check_connection()
 
-        self.Main_frame.grid(row=1, column=0, sticky=NSEW)
+        self.Main_frame.grid(row=1, column=1)
 
     # def check_connection(self):
     #     try:
@@ -57,25 +55,27 @@ class App(ctk.CTk):
     #         print("The internet connection is down")
     #     threading.Timer(3, self.check_connection).start()
 
-    def __del__(self):
-        pass
 
 
 class MainHeader(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
-        self.configure(fg_color="#FFA302")
+        self.configure(fg_color="#FFA302", bg_color="#FFA302")
+        self.App_obj = master
+        # self.columnconfigure(0, weight=1)
+        # self.Logo = ctk.CTkLabel(self, text="QUIZZY", font=("", 33))
+        # self.Logo.pack(side=LEFT)
+        self.LOGO_PICK = ctk.CTkImage(Image.open("QUIZZY.png"), size=(200, 50))
+        self.Logo = ctk.CTkLabel(self, image=self.LOGO_PICK, text="")
+        self.Logo.pack(side=LEFT)
 
-        self.columnconfigure(0, weight=1)
-        self.Logo = ctk.CTkLabel(self, text="QUIZZY", font=("", 33))
-        self.Logo.grid(column=0, sticky=SW)
 
 
 class MainFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         self.App_obj = master
-        self.configure(fg_color="lightgray")
+        self.configure(fg_color="#7A7A7A")
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 
@@ -88,16 +88,15 @@ class MainFrame(ctk.CTkFrame):
         print("frame1")
         self.App_obj.Main_frame.grid_forget()
         print(tracemalloc.get_traced_memory())
-        self.App_obj.Game_Frame.grid(row=1, column=0, sticky=NSEW)
+        self.App_obj.Game_Frame.grid(row=1, column=1)
 
-    def __del__(self):
-        print("frame1 destructed")
 
 
 class InGameFrame(ctk.CTkFrame):
     def __init__(self, master: ctk.CTk, **kwargs):
         super().__init__(master, **kwargs)
         self.App_obj = master
+        self.configure(fg_color="#7A7A7A")
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
         lab2 = ctk.CTkLabel(self, text="WINDOW2", bg_color="#00E8FC", font=("", 50))
@@ -109,10 +108,8 @@ class InGameFrame(ctk.CTkFrame):
         print("frame2")
         self.App_obj.Game_Frame.grid_forget()
         print(tracemalloc.get_traced_memory())
-        self.App_obj.Main_frame.grid(row=1, column=0, sticky=NSEW)
+        self.App_obj.Main_frame.grid(row=1, column=1, sticky=NSEW)
 
-    def __del__(self):
-        print("frame2 destructed")
 
 
 if __name__ == "__main__":
