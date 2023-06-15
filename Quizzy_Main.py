@@ -8,7 +8,7 @@ import tracemalloc
 Window_Width = 1500
 Window_Height = 900
 
-ctk.set_default_color_theme("static/green.json")
+# ctk.set_default_color_theme("static/green.json")
 
 class App(ctk.CTk):
     def __init__(self):
@@ -22,17 +22,16 @@ class App(ctk.CTk):
         self.minsize(int(Window_Width*0.6), int(Window_Height*0.6))
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=20)
-        self.columnconfigure(0, weight=6)
+        # self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=29)
 
 
         self.Main_header = MainHeader(self)
-        # self.Main_header.pack(side=TOP, fill=X)
-        self.Main_header.grid(row=0, columnspan=2, sticky=NSEW)
+        self.Main_header.grid(row=0, columnspan=2,sticky=NSEW)
 
-        self.Left_frame = ctk.CTkFrame(self, fg_color="#292929")
-        self.labbel = ctk.CTkLabel(self.Left_frame, text="TEST\nOptions\nMenu", font=("", 30), text_color="green").pack()
-        self.Left_frame.configure(corner_radius=0)
+
+        self.Left_frame = ctk.CTkFrame(self, fg_color="#292929", width=50, height=int(Window_Height*0.6))
+        self.labbel = ctk.CTkLabel(self.Left_frame, text="Textrtt", font=("", 30), text_color="green")
         self.Left_frame.grid(row=1, column=0, sticky=NSEW)
 
 
@@ -62,14 +61,14 @@ class App(ctk.CTk):
 class MainHeader(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
-        self.configure(fg_color="#FFA302", bg_color="#FFA302")
         self.App_obj = master
+        self.configure(fg_color="#FFA302", bg_color="#FFA302", height=200, width=Window_Width)
         # self.columnconfigure(0, weight=1)
         # self.Logo = ctk.CTkLabel(self, text="QUIZZY", font=("", 33))
         # self.Logo.pack(side=LEFT)
         self.LOGO_PICK = ctk.CTkImage(Image.open("QUIZZY.png"), size=(200, 50))
-        self.Logo = ctk.CTkLabel(self, image=self.LOGO_PICK, text="", fg_color="red")
-        self.Logo.pack(side=LEFT)
+        self.Logo = ctk.CTkLabel(self, image=self.LOGO_PICK, text="", fg_color="transparent")
+        self.Logo.grid(ipady=5, sticky=W)
 
 
 
@@ -89,6 +88,8 @@ class MainFrame(ctk.CTkFrame):
     def win12(self):
         print("frame1")
         self.App_obj.Main_frame.grid_forget()
+        # self.App_obj.Left_fra
+        # self.App_obj.columnconfigure(0, weight=6)
         print(tracemalloc.get_traced_memory())
         self.App_obj.Game_Frame.grid(row=1, column=1, sticky=NSEW)
 
@@ -109,6 +110,7 @@ class InGameFrame(ctk.CTkFrame):
     def win21(self):
         print("frame2")
         self.App_obj.Game_Frame.grid_forget()
+        # self.App_obj.columnconfigure(0, weight=1)
         print(tracemalloc.get_traced_memory())
         self.App_obj.Main_frame.grid(row=1, column=1, sticky=NSEW)
 
