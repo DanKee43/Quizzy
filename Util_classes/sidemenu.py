@@ -9,7 +9,7 @@ class SideBarMenu(ctk.CTkFrame):
         self.configure(corner_radius=4, border_width=2, border_color="black", fg_color=APP.get_main_colors()[0],
                        width=50)
         self.path = "static/sidebar/"
-        self.buttons_list = ["menu", "profile", "friends", "stats", "settings"]
+        self.buttons_list = ["menu", "profile"]
         self.btn_objs_list = []
         self.btn_size = 40
 

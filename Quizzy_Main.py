@@ -4,7 +4,7 @@ import customtkinter as ctk
 from Util_classes.header import MainHeader
 from Util_classes.sidemenu import SideBarMenu
 from Util_classes.MainFrames.mainmenu import MainMenu
-from Util_classes.MainFrames.profileframe import ProfileFrame
+from Util_classes.MainFrames.profileframe import (ProfileFrame, RegistrationPage, LoginPage)
 from Util_classes.game_class import GameFrame
 
 from Util_classes.user import User
@@ -78,6 +78,10 @@ class App(ctk.CTk):
             new_frame = MainMenu(self)
         elif frame_name == "profile":
             new_frame = ProfileFrame(self)
+        elif frame_name == "login":
+            new_frame = LoginPage(self)
+        elif frame_name == "registration":
+            new_frame = RegistrationPage(self)
         elif frame_name == "Game_frame":
             new_frame = GameFrame(self)
 
@@ -86,15 +90,9 @@ class App(ctk.CTk):
         self._Main_frame.grid(row=1, pady=(10, 10), padx=(100, 150), column=1, sticky=ctk.NSEW)
 
 
-    def change_InGame_status(self, status: bool):
+    def change_ingame_status(self, status: bool):
         self.InGame = status
 
-
-    def register_user(self, username):
-        if register(username) == "OK":
-            print("registered")
-            self.User = username
-            self.IsAuth = True
 
 
 if __name__ == "__main__":

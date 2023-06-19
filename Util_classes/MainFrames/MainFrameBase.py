@@ -18,5 +18,5 @@ class MainFrameBase(ctk.CTkFrame):
         self.columnconfigure(0, weight=2)
         self.columnconfigure(1, weight=2)
         self.columnconfigure(2, weight=2)
-        for _ in range(10):
-            self.rowconfigure(_, weight=1)
+        for i in range(10):
+            self.rowconfigure(i, weight=1)
