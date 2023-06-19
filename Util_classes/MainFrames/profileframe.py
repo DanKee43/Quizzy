@@ -9,8 +9,6 @@ class ProfileFrame(MainFrameBase):
         self.fg_color, self.fg_color_hover = APP.get_main_colors()
         self.btn_font = ("Arial", 20, "bold")
 
-        # lab = ctk.CTkLabel(self, text="NAME:")
-        # lab.grid(row=1, column=1, pady=(120, 0))
 
         if not APP.IsAuth:
             register_btn = self.Menu_Button(self, text="Создать профиль", command=self.register_user)
@@ -23,10 +21,14 @@ class ProfileFrame(MainFrameBase):
             Login_btn.grid(row=2, column=1, sticky=ctk.EW)
 
         else:
-            self.name_label = ctk.CTkLabel(self, text=APP.User)
+            self.name_label = ctk.CTkLabel(self, text=APP.User.get_username(),
+                                           font=self.btn_font, fg_color="gray")
             self.name_label.grid(row=2, column=1)
 
+            self.online_label = ctk.CTkLabel(self, text=APP.IsOnline,
+                                             font=self.btn_font, fg_color="gray")
+            self.online_label.grid(row=3, column=1)
+
+
     def register_user(self):
-        if self.name_entry.get():
-            self.APP.register_user(self.name_entry.get())
-            self.APP.change_main_frame("profile")
+        pass

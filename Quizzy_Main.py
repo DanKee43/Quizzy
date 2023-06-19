@@ -1,12 +1,13 @@
 import customtkinter as ctk
 
 
-from Util_classes.header import MainHeader#
-from Util_classes.sidemenu import SideBarMenu#
+from Util_classes.header import MainHeader
+from Util_classes.sidemenu import SideBarMenu
 from Util_classes.MainFrames.mainmenu import MainMenu
 from Util_classes.MainFrames.profileframe import ProfileFrame
-
 from Util_classes.game_class import GameFrame
+
+from Util_classes.user import User
 
 from Util_classes.Server_handler.Register_User import register
 
@@ -25,10 +26,6 @@ def check_connection() -> bool:
 
 
 class App(ctk.CTk):
-    """
-        Main class for running the app.
-        Contains window and its design configuration, and frames to switch between
-    """
 
     def __init__(self):
         super().__init__()
@@ -50,8 +47,8 @@ class App(ctk.CTk):
 
         self.app_language = "RUS"
 
-        self.User = None
-        self.IsAuth: bool = False
+        self.User = User()
+        self.IsAuth: bool = self.User.user_authenticated()
         self.IsOnline: bool = check_connection()
 
         self.Game = None

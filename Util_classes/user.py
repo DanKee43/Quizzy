@@ -1,0 +1,31 @@
+
+from Util_classes.Server_handler.user_Authentication import check_token
+
+
+class User:
+
+    def __init__(self):
+        self.is_authenticated: bool = False
+        self._Username = ""
+        self._ID = -1
+        self._token = ""
+
+        with open("userconfig.txt", mode="r") as config:
+            username = config.readline().rstrip()
+            ID = config.readline().rstrip()
+            token = config.readline().rstrip()
+
+            if username:
+                self._Username = username
+            if ID:
+                self._ID = int(ID)
+            if token:
+                self._token = token
+
+    def user_authenticated(self):
+        self.is_authenticated = check_token(self._Username, self._ID, self._token)
+        return self.is_authenticated
+
+
+    def get_username(self):
+        return self._Username
