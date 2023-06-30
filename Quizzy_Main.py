@@ -45,7 +45,7 @@ class App(ctk.CTk):
         self.main_color = "#FFA302"
         self.main_color_hover = "#E18502"
 
-        self.app_language = "RUS"
+        # self.app_language = "RUS"
 
         self.User = User()
         self.IsAuth: bool = self.User.user_authenticated()
@@ -74,6 +74,7 @@ class App(ctk.CTk):
     # Main frames : Main_Menu, Game_frame, profile, options...
     def change_main_frame(self, frame_name):
         new_frame = None
+
         if frame_name == "menu":
             new_frame = MainMenu(self)
         elif frame_name == "profile":
@@ -92,6 +93,15 @@ class App(ctk.CTk):
 
     def change_ingame_status(self, status: bool):
         self.InGame = status
+
+    def guest_auth(self):
+        self.User.register_guest()
+        self.IsAuth = True
+        self.change_main_frame("profile")
+
+    def logout(self):
+        self.IsAuth = False
+        self.change_main_frame("profile")
 
 
 

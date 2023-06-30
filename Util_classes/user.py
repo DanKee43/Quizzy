@@ -1,11 +1,13 @@
 
-from Util_classes.Server_handler.user_Authentication import check_token
+from Util_classes.Server_handler.user_Authentication import check_token, gen_token
+import random
 
 
 class User:
 
     def __init__(self):
         self.is_authenticated: bool = False
+        self.is_guest = False
         self._Username = ""
         self._ID = -1
         self._token = ""
@@ -22,10 +24,23 @@ class User:
             if token:
                 self._token = token
 
+    def register_guest(self):
+        self._Username = "Guest#" + str(random.randint(10000000, 99999999))
+        self._token = gen_token()
+        self._ID = random.randint(10000, 99999)
+        self.is_guest = True
+        print(self._token)
+
+
     def user_authenticated(self):
-        self.is_authenticated = check_token(self._Username, self._ID, self._token)
-        return self.is_authenticated
+        if self.is_guest:
+            return True
+        else:
+            self.is_authenticated = check_token(self._Username, self._ID, self._token)
+            return self.is_authenticated
 
 
     def get_username(self):
         return self._Username
+
+

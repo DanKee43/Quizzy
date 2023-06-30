@@ -10,23 +10,29 @@ class ProfileFrame(MainFrameBase):
         self.btn_font = ("Arial", 20, "bold")
 
         if not APP.IsAuth:
-            self.NextPage = None
-            register_btn = self.Menu_Button(self, text="Создать профиль",
+
+            Register_btn = self.Menu_Button(self, text="Создать профиль",
                                             command=lambda page="registration": self.APP.change_main_frame(page))
-            register_btn.grid(row=3, column=1, sticky=ctk.EW)
+            Register_btn.grid(row=3, column=1, sticky=ctk.EW)
+
 
             Login_btn = self.Menu_Button(self, text="Войти",
                                          command=lambda page="login": self.APP.change_main_frame(page))
             Login_btn.grid(row=2, column=1, sticky=ctk.EW)
+
+            Guest_login = self.Menu_Button(self, text="Войти как гость",
+                                           command=lambda: self.APP.guest_auth())
+            Guest_login.grid(row=6, column=1, sticky=ctk.EW)
 
         else:
             name_label = ctk.CTkLabel(self, text=APP.User.get_username(),
                                       font=self.btn_font, fg_color="gray")
             name_label.grid(row=2, column=1)
 
-            online_label = ctk.CTkLabel(self, text=APP.IsOnline,
-                                        font=self.btn_font, fg_color="gray")
-            online_label.grid(row=3, column=1)
+            Logout_btn = self.Menu_Button(self, text="Выйти",
+                                          command=lambda: self.APP.logout())
+            Logout_btn.grid(row=4, column=1, sticky=ctk.EW)
+
 
 
 

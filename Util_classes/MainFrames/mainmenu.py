@@ -19,7 +19,7 @@ class MainMenu(MainFrameBase):
         self.previous_scene = ""
 
         BACK_btn = ctk.CTkButton(self, image=ctk.CTkImage(Image.open("static/left_arrow.png"), size=(30, 30)),
-                                 text="", width=30, height=30, fg_color="transparent",
+                                 text="", width=30, height=30, fg_color="transparent", hover=False,
                                  command=lambda scene="BACK": self.change_scene(scene))
         BACK_btn.grid(row=0, column=0, sticky=ctk.NW, pady=5, padx=5)
 
@@ -78,6 +78,14 @@ class MainMenu(MainFrameBase):
         self.scene_2_1.append(JOIN_btn)
 
         # --------------------------------------------------------------# scene_2_2 (create game)
+
+        CREATE_GAME_btn = self.Menu_Button(self, text="Создать игру")
+                                           # command= lambda : APP)
+        CREATE_GAME_btn.grid(row=3, column=1, sticky=ctk.EW)
+        CREATE_GAME_btn.grid_remove()
+
+        self.scene_2_2.append(CREATE_GAME_btn)
+
 
     def change_scene(self, destination: str):
         if destination == "BACK":
