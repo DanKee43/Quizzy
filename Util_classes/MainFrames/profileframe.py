@@ -1,47 +1,20 @@
+from Util_classes.MainFrames.MainFrameTemplate import MainFrameTemplate, ctk
 
-from Util_classes.MainFrames.MainFrameBase import MainFrameBase, ctk
 
-
-class ProfileFrame(MainFrameBase):
-    def __init__(self, APP):
-        super().__init__(APP)
-        self.APP = APP  # Reference to App instance
-        self.fg_color, self.fg_color_hover = APP.get_main_colors()
+class ProfileFrame(MainFrameTemplate):
+    def __init__(self, main_window):
+        super().__init__(main_window)
+        self.fg_color, self.fg_color_hover = main_window.get_main_colors()
         self.btn_font = ("Arial", 20, "bold")
 
-        if not APP.IsAuth:
-
-            Register_btn = self.Menu_Button(self, text="Создать профиль",
-                                            command=lambda page="registration": self.APP.change_main_frame(page))
-            Register_btn.grid(row=3, column=1, sticky=ctk.EW)
-
-
-            Login_btn = self.Menu_Button(self, text="Войти",
-                                         command=lambda page="login": self.APP.change_main_frame(page))
-            Login_btn.grid(row=2, column=1, sticky=ctk.EW)
-
-            Guest_login = self.Menu_Button(self, text="Войти как гость",
-                                           command=lambda: self.APP.guest_auth())
-            Guest_login.grid(row=6, column=1, sticky=ctk.EW)
-
-        else:
-            name_label = ctk.CTkLabel(self, text=APP.User.get_username(),
-                                      font=self.btn_font, fg_color="gray")
-            name_label.grid(row=2, column=1)
-
-            Logout_btn = self.Menu_Button(self, text="Выйти",
-                                          command=lambda: self.APP.logout())
-            Logout_btn.grid(row=4, column=1, sticky=ctk.EW)
+        if not main_window.App_Controller.
+            print(main_window.App_Controller._User._Username)
 
 
 
-
-
-class RegistrationPage(MainFrameBase):
+class RegistrationPage(MainFrameTemplate):
     def __init__(self, APP):
         super().__init__(APP)
-
-        Frame = ctk.CTkFrame(self, )
 
         name_label = ctk.CTkLabel(self, text="Введите имя:")
         name_label.grid(row=2, column=1)
@@ -56,7 +29,7 @@ class RegistrationPage(MainFrameBase):
         # register_btn = self.Menu_Button()
 
 
-class LoginPage(MainFrameBase):
+class LoginPage(MainFrameTemplate):
     def __init__(self, master):
         super().__init__(master)
 

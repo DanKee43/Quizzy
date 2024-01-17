@@ -7,10 +7,10 @@ class User:
 
     def __init__(self):
         self.is_authenticated: bool = False
-        self.is_guest = False
-        self._Username = ""
-        self._ID = -1
-        self._token = ""
+        self.is_guest: bool = False
+        self._Username: str = ""
+        self._ID: int = -1
+        self._token: str = ""
 
         with open("userconfig.txt", mode="r") as config:
             username = config.readline().rstrip()
@@ -31,14 +31,13 @@ class User:
         self.is_guest = True
         print(self._token)
 
-
-    def user_authenticated(self):
+    def is_user_authenticated(self):
         if self.is_guest:
+            self.is_authenticated = True
             return True
         else:
             self.is_authenticated = check_token(self._Username, self._ID, self._token)
             return self.is_authenticated
-
 
     def get_username(self):
         return self._Username

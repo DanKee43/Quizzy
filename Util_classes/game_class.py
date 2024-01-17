@@ -1,8 +1,8 @@
 import customtkinter as ctk
-from Util_classes.MainFrames.MainFrameBase import MainFrameBase
+from Util_classes.MainFrames.MainFrameTemplate import MainFrameTemplate
 
 
-class GameFrame(MainFrameBase):
+class GameFrame(MainFrameTemplate):
     def __init__(self, master):
         super().__init__(master)
         self.label = ctk.CTkLabel(self, text="ИГРА НОМЕР 228")

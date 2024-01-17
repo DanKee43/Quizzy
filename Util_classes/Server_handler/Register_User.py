@@ -3,7 +3,7 @@ import requests
 
 def check_connection() -> bool:
     try:
-        requests.head("http://www.google.com/", timeout=1)
+        requests.head("https://www.google.com/", timeout=1)
         return True
     except requests.ConnectionError:
         return False
